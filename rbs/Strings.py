@@ -32,7 +32,7 @@ def mismatch_search(haystack, needle, mismatches=1):
     haystack = haystack.encode('utf-8');
     needle = needle.encode('utf-8');
     if not using_tre:
-        raise BarendtError("tre isn't loaded.")
+        raise RBSError("tre isn't loaded.")
     fz = tre.Fuzzyness(maxerr=mismatches, maxsub=mismatches,
                        maxdel=0, maxins=0)
     needle = ".*(%s).*" % needle
