@@ -5,6 +5,7 @@ setup(name='rbs',
       py_modules = [
         'rbs.Constants',
         'rbs.Exceptions',
+        'rbs.Files',
         'rbs.Sequences',
         'rbs.Strings'],
       )
