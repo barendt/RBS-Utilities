@@ -128,4 +128,3 @@ def reverse_complement(sequence):
     """Return the reverse complement of the given sequence."""
     reverse = [complement_base(base) for base in sequence[::-1]]
     return "".join(reverse)
-
