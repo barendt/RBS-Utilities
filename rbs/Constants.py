@@ -4,8 +4,21 @@ sequence_16s = """AAAUUGAAGAGUUUGAUCAUGGCUCAGAUUGAACGCUGGCGGCAGGCCUAACACAUGCAAGU
 # The enhancer sequence
 sequence_enhancer = "TAGAAATAATTTTGTTTAACTTTAAGAAGGAGATATA"
 
+#ACCUCCUUA
+#UAAG, AAGG, AGGA, GGAG, GAGG, AGGU
+# Various sized windows of the SD sequence by the "medium" definion
+sd_variants_medium = {
+    4: ['UAAG', 'AAGG', 'AGGA', 'GGAG', 'GAGG', 'AGGU'],
+    #5: ['UAAGGA', 'AAGGAG', 'AGGAGG', 'GGAGGU', 'GAGGUG', 'AGGUGA', 'GGUGAU', 
+    #    'GUGAUC'],
+    #6: ['UAAGGA', 'AAGGAG', 'AGGAGG', 'GGAGGU', 'GAGGUG', 'AGGUGA', 'GGUGAU', 
+    #    'GUGAUC'],
+    #7: ['UAAGGAG', 'AAGGAGG', 'AGGAGGU', 'GGAGGUG', 'GAGGUGA', 'AGGUGAU', 
+    #    'GGUGAUC']
+}
+
 # Various sized windows of the SD sequence by the "broad" definition
-sd_variants = {
+sd_variants_broad = {
     4: ['UAAG', 'AAGG', 'AGGA', 'GGAG', 'GAGG', 'AGGU', 'GGUG', 'GUGA', 'UGAU', 
         'GAUC'],
     5: ['UAAGGA', 'AAGGAG', 'AGGAGG', 'GGAGGU', 'GAGGUG', 'AGGUGA', 'GGUGAU', 
