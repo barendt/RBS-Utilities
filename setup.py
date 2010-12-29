@@ -7,5 +7,6 @@ setup(name='rbs',
         'rbs.Exceptions',
         'rbs.Files',
         'rbs.Sequences',
-        'rbs.Strings'],
+        'rbs.Strings',
+        'rbs.Utilities',],
       )
