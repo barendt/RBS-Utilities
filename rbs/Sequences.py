@@ -132,7 +132,6 @@ def load_from_db(db, mid, batch=2, population_type="all",
         sql += ")"
     if exclude_inframe_stop:
         sql += " AND has_inframe_aug IS NULL"
-        print sql
     db.row_factory = sqlite3.Row
     with closing(db.cursor()) as cursor:
         results = cursor.execute(sql, (batch, mid,)).fetchall()
