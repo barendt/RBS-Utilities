@@ -1,6 +1,10 @@
+from contextlib import closing
 from copy import copy
 import itertools
 from random import choice
+import sqlite3
+
+from rbs.Constants import sd_variants_medium
 
 class SequenceError(Exception):
     def __init__(self, msg):
@@ -94,6 +98,46 @@ def flexible_reverse_complements(sequence):
     while len(sequence):
         sequence, expansions = _frc_process(sequence, expansions)
     return ["".join(expansion) for expansion in expansions]
+
+def load_from_db(db, mid, batch=2, population_type="all", 
+                 exclude_inframe_stop=False):
+    """Load random regions from the database.
+
+    db -- The path to the sqlite database.
+    mid -- The MID to load.
+    batch -- The sequencing batch, defaults to 2.
+    population_type -- "all"|"no_sd"|"only_sd"
+    exclude_inframe_stop -- If True, don't include sequences with an in-frame 
+                            AUG.
+
+    """
+    db = sqlite3.connect(db)
+    sql = """SELECT REPLACE(random_region,"T","U") FROM sequences
+             WHERE batch_id = ? AND mid_id = ?
+             AND LENGTH(random_region) = 18"""
+    if population_type == "all":
+        pass
+    elif population_type == "no_sd":
+        for variant in sd_variants_medium[4]:
+            sql += " AND random_region NOT LIKE %s" % (
+                "'%"+variant.replace("U", "T")+"%'")
+    elif population_type == "only_sd":
+        sql += " AND ("
+        pieces = list()
+        for variant in sd_variants_medium[4]:
+            pieces.append(
+                "random_region LIKE %s" % (
+                    "'%"+variant.replace("U","T")+"%'"))
+        sql += " OR ".join(pieces)
+        sql += ")"
+    if exclude_inframe_stop:
+        sql += " AND has_inframe_aug IS NULL"
+        print sql
+    db.row_factory = sqlite3.Row
+    with closing(db.cursor()) as cursor:
+        results = cursor.execute(sql, (batch, mid,)).fetchall()
+    sequences = [str(result[0]) for result in results]
+    return sequences
 
 def pairing_strength(sequence1, sequence2):
     """Returns a scoring of the strength of pairing between two RNA molecules.
