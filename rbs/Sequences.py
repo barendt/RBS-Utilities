@@ -5,6 +5,7 @@ from random import choice
 import sqlite3
 
 from rbs.Constants import sd_variants_medium
+from rbs.Exceptions import RBSError
 
 class SequenceError(Exception):
     def __init__(self, msg):
@@ -137,6 +138,49 @@ def load_from_db(db, mid, batch=2, population_type="all",
         results = cursor.execute(sql, (batch, mid,)).fetchall()
     sequences = [str(result[0]) for result in results]
     return sequences
+
+def load_random_sequences(count, exclude_sd=False, sd_only=False,
+                          exclude_inframe_aug=False):
+    """Return a list of random 18 base sequences without in-frame start
+    codons.
+    
+    count -- The number of sequences to generate.
+    exclude_sd -- If True, don't generate random sequences with SD
+                  sequences by the broad definition.
+    sd_only -- If True, only return SD sequences.
+    exclude_inframe_aug -- If True, exclude sequences with in-frame AUGs.
+
+    """
+    sequences = list()
+    base_set = "ACGU"
+    start_codon = ["A", "U", "G"]
+    while True:
+        try:
+            bases = list()
+            for i in range(18):
+                bases.append(choice(base_set))
+                if exclude_inframe_aug:
+                    if i in range(3, 18, 3):
+                        if bases[i-3:i] == start_codon:
+                            raise RBSError("Has in-frame AUG.")
+            sequence = "".join(bases)
+            if exclude_sd:
+                for variant in sd_variants_medium[4]:
+                    if variant in sequence:
+                        raise RBSError(variant)
+            if sd_only:
+                is_sd = False
+                for variant in sd_variants_medium[4]:
+                    if variant in sequence:
+                        is_sd = True
+                        break
+                if not is_sd:
+                    raise RBSError(variant)
+            sequences.append(sequence)
+        except RBSError:
+            pass
+        if len(sequences) == count:
+            return sequences
 
 def pairing_strength(sequence1, sequence2):
     """Returns a scoring of the strength of pairing between two RNA molecules.
