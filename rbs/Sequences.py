@@ -108,7 +108,7 @@ def load_from_db(db, mid, batch=2, population_type="all",
     mid -- The MID to load.
     batch -- The sequencing batch, defaults to 2.
     population_type -- "all"|"no_sd"|"only_sd"
-    exclude_inframe_stop -- If True, don't include sequences with an in-frame 
+    exclude_inframe_start -- If True, don't include sequences with an in-frame 
                             AUG.
 
     """
