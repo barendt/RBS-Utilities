@@ -6,7 +6,10 @@ overwriting a pickle instead of reading it.
 """
 
 import os
-import pickle
+try:
+    import cPickle as pickle
+except ImportError:
+    import pickle
 
 class RBSUtilitiesError(Exception):
     def __init__(self, msg):
