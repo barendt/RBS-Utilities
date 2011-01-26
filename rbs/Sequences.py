@@ -29,7 +29,7 @@ iupac_nucleotides = {
     "N": "ACGT",
 }
 
-def _frc_process(sequence, sequence_list):
+def _frc_process(sequence, sequence_list, exclude_wobble):
     next_base = sequence[-1]
     sequence = sequence[:-1]
     if next_base == "A":
@@ -47,23 +47,29 @@ def _frc_process(sequence, sequence_list):
     elif next_base == "G":
         if len(sequence_list) > 0:
             for i in xrange(0, len(sequence_list)):
-                new_each = copy(sequence_list[i])
+                if not exclude_wobble:
+                    new_each = copy(sequence_list[i])
                 sequence_list[i] += "C"
-                new_each += "U"
-                sequence_list.append(new_each)
+                if not exclude_wobble:
+                    new_each += "U"
+                    sequence_list.append(new_each)
         else:
             sequence_list.append(["C"])
-            sequence_list.append(["U"])
+            if not exclude_wobble:
+                sequence_list.append(["U"])
     elif next_base == "U":
         if len(sequence_list) > 0:
             for i in xrange(0, len(sequence_list)):
-                new_each = copy(sequence_list[i])
+                if not exclude_wobble:
+                    new_each = copy(sequence_list[i])
                 sequence_list[i] += "A"
-                new_each += "G"
-                sequence_list.append(new_each)
+                if not exclude_wobble:
+                    new_each += "G"
+                    sequence_list.append(new_each)
         else:
             sequence_list.append(["A"])
-            sequence_list.append(["G"])
+            if not exclude_wobble:
+                sequence_list.append(["G"])
     del(next_base)
     return sequence, sequence_list
 
@@ -93,15 +99,15 @@ def complement_base(base):
     else:
         return base
 
-def flexible_reverse_complements(sequence):
+def flexible_reverse_complements(sequence, exclude_wobble=True):
     """Return a list of FRCs for a sequence."""
-    sequence, expansions = _frc_process(sequence, list())
+    sequence, expansions = _frc_process(sequence, list(), exclude_wobble)
     while len(sequence):
-        sequence, expansions = _frc_process(sequence, expansions)
+        sequence, expansions = _frc_process(sequence, expansions, exclude_wobble)
     return ["".join(expansion) for expansion in expansions]
 
 def load_from_db(db, mid, batch=2, population_type="all", 
-                 exclude_inframe_stop=False):
+                 exclude_inframe_start=False):
     """Load random regions from the database.
 
     db -- The path to the sqlite database.
@@ -131,7 +137,7 @@ def load_from_db(db, mid, batch=2, population_type="all",
                     "'%"+variant.replace("U","T")+"%'"))
         sql += " OR ".join(pieces)
         sql += ")"
-    if exclude_inframe_stop:
+    if exclude_inframe_start:
         sql += " AND has_inframe_aug IS NULL"
     db.row_factory = sqlite3.Row
     with closing(db.cursor()) as cursor:
