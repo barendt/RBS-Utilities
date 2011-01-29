@@ -8,5 +8,6 @@ setup(name='rbs',
         'rbs.Files',
         'rbs.Sequences',
         'rbs.Strings',
+        'rbs.Transterm',
         'rbs.Utilities',],
       )
