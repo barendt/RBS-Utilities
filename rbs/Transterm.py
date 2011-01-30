@@ -14,7 +14,7 @@ def get_organisms(db, type="utr"):
     type -- "utr" | "rrna"
 
     """
-    sql = "SELECT o.name FROM organisms WHERE id IN (SELECT DISTINCT(organism_id) FROM %s)" % (
+    sql = "SELECT name FROM organisms WHERE id IN (SELECT DISTINCT(organism_id) FROM %s)" % (
         "sequences" if type == "utr" else "rrna")
     db = sqlite3.connect(db)
     with closing(db.cursor()) as cursor:
