@@ -4,7 +4,7 @@ import itertools
 from random import choice
 import sqlite3
 
-from rbs.Constants import sd_variants_medium
+from rbs.Constants import sd_variants_broad, sd_variants_medium
 from rbs.Exceptions import RBSError
 
 class SequenceError(Exception):
@@ -105,6 +105,22 @@ def flexible_reverse_complements(sequence, exclude_wobble=True):
     while len(sequence):
         sequence, expansions = _frc_process(sequence, expansions, exclude_wobble)
     return ["".join(expansion) for expansion in expansions]
+
+def is_sd(sequence, stringency="medium"):
+    """Return a boolean, whether sequence contains a 4 base SD motif or not.
+
+    sequence -- The sequence to examine for SD motif.
+    stringency -- "broad" | "medium". The definition of SD to use.
+
+    """
+    if stringency == "broad":
+        variants = sd_variants_broad[4]
+    else:
+        variants = sd_variants_medium[4]
+    for variant in variants:
+        if variant in sequence:
+            return True
+    return False
 
 def load_from_db(db, mid, batch=2, population_type="all", 
                  exclude_inframe_start=False):
