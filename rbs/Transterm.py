@@ -7,6 +7,21 @@ class TranstermNoSequencesError(Exception):
     def __init__(self, msg):
         self.msg = msg
 
+def get_organisms(db, type="utr"):
+    """Return the organism keys.
+
+    db -- Path to the SQLite database.
+    type -- "utr" | "rrna"
+
+    """
+    sql = "SELECT o.name FROM organisms WHERE id IN (SELECT DISTINCT(organism_id) FROM %s)" % (
+        "sequences" if type == "utr" else "rrna")
+    db = sqlite3.connect(db)
+    with closing(db.cursor()) as cursor:
+        results = cursor.execute(sql).fetchall()
+    organisms = [str(result[0]) for result in results]
+    return organisms
+
 def load_rrna(db, organism):
     """Return the rRNA for the specified organism.
 
@@ -34,3 +49,4 @@ def load_sequences(db, organism):
     if len(sequences) == 0:
         raise TranstermNoSequencesError("No sequences found for organism")
     return sequences
+    
