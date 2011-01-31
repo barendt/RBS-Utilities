@@ -106,6 +106,24 @@ def flexible_reverse_complements(sequence, exclude_wobble=True):
         sequence, expansions = _frc_process(sequence, expansions, exclude_wobble)
     return ["".join(expansion) for expansion in expansions]
 
+def get_base_usage(sequences):
+    """Return a dict with each base and its occurrence in the  in the sequence list.
+
+    sequences -- A list of sequences
+    
+    """
+    usage = {"A": 0, "C": 0, "G": 0, "U": 0}
+    for sequence in sequences:
+        for base in usage:
+            usage[base] += sequence.count(base)
+    return usage
+
+def has_inframe_aug(sequence):
+    for i in range(0, 16, 3):
+        if sequence[i:i+3] == "AUG":
+            return True
+    return False
+
 def is_sd(sequence, stringency="medium"):
     """Return a boolean, whether sequence contains a 4 base SD motif or not.
 
