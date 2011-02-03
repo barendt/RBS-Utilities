@@ -1,4 +1,7 @@
-from distutils.core import setup
+from distutils.core import setup, Extension
+
+c_strings = Extension('cStrings',
+                      sources = ['rbs/cStrings.c'])
 
 setup(name='rbs',
       version='1.0',
@@ -10,4 +13,7 @@ setup(name='rbs',
         'rbs.Strings',
         'rbs.Transterm',
         'rbs.Utilities',],
+      ext_modules = [c_strings],
+      ext_package = 'rbs',
+      packages = ['rbs'],
       )
