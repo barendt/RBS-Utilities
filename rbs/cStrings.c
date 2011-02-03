@@ -30,3 +30,12 @@ overlap_count(PyObject *self, PyObject *args) {
     i++;
   }
 }
+
+static PyMethodDef cStrings_methods[] = {
+  {"overlap_count", (PyCFunction)overlap_count, METH_VARARGS, NULL},
+  {NULL, NULL, 0, NULL}
+};
+
+PyMODINIT_FUNC initcStrings() {
+  Py_InitModule3("cStrings", cStrings_methods, "docstring");
+}
