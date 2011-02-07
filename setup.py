@@ -15,5 +15,5 @@ setup(name='rbs',
         'rbs.Utilities',],
       ext_modules = [c_strings],
       ext_package = 'rbs',
-      packages = ['rbs'],
+      #packages = ['rbs'],
       )

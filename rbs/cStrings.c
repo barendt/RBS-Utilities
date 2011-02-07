@@ -6,6 +6,7 @@ overlap_count(PyObject *self, PyObject *args) {
   int j = 0;
   int k = 0;
   int count = 0;
+  int haystack_length = 0;
   int needle_length;
   const char* haystack;
   const char* needle;
@@ -14,21 +15,27 @@ overlap_count(PyObject *self, PyObject *args) {
     return NULL;
   }
 
+  haystack_length = strlen(haystack);
   needle_length = strlen(needle);
 
-  while (haystack[i+needle_length-1] != EOF) {
-    j = i;
-    for (k=0; k<needle_length; k++) {
-      if (haystack[j] != needle[k]) {
-        break;
-      }
-      if (k == needle_length) {
-        count++;
-      }
-      j++;
+  for (i=0; i < haystack_length; i++) {
+    if (haystack[i] == needle[0]) {
+      k = i + 1;
+      for (j=1; j < needle_length; j++) {
+        if (haystack[k] == needle[j]) {
+          if (j == needle_length-1) {
+            count++;
+          }
+          k++;          
+        }
+        else {
+          break;
+        }
+      }      
     }
-    i++;
   }
+
+  return Py_BuildValue("i", count);
 }
 
 static PyMethodDef cStrings_methods[] = {
