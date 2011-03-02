@@ -1,7 +1,7 @@
 from contextlib import closing
 from copy import copy
 import itertools
-from random import choice
+from random import choice, sample
 import sqlite3
 
 from rbs.Constants import sd_variants_broad, sd_variants_medium
@@ -255,3 +255,17 @@ def reverse_complement(sequence):
     """Return the reverse complement of the given sequence."""
     reverse = [complement_base(base) for base in sequence[::-1]]
     return "".join(reverse)
+
+def scramble_sequences(sequences, multiplier):
+    """Generate a list of scrambled sequences based on the input sequences.
+
+    sequences -- A list of sequences to scramble.
+    multiplier -- The number of times to scramble and add each input sequence.
+    """
+    output = list()
+    for sequence in sequences:
+        i = 0
+        while i < multiplier:
+            output.append("".join(sample(sequence, len(sequence))))
+            i += 1
+    return output

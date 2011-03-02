@@ -49,4 +49,15 @@ def load_sequences(db, organism):
     if len(sequences) == 0:
         raise TranstermNoSequencesError("No sequences found for organism")
     return sequences
-    
+
+def load_utr_data(db, organism):
+    sql = """SELECT REPLACE(rbs,"T","U"), full_sequence FROM sequences 
+             WHERE organism_id = (SELECT id FROM organisms WHERE name = ?) 
+             AND LENGTH(rbs) = 18"""
+    db = sqlite3.connect(db)
+    db.row_factory = sqlite3.Row
+    with closing(db.cursor()) as cursor:
+        results = cursor.execute(sql, (organism,)).fetchall()
+    if len(results) == 0:
+        raise TranstermNoSequencesError("No sequences found for organism")
+    return results
