@@ -48,10 +48,7 @@ sequence_enhancer = "TAGAAATAATTTTGTTTAACTTTAAGAAGGAGATATA"
 sd_variants_medium = {
     4: ['UAAG', 'AAGG', 'AGGA', 'GGAG', 'GAGG', 'AGGU'],
     5: ['UAAGG', 'AAGGA', 'AGGAG', 'GGAGG', 'GAGGU'],
-    #6: ['UAAGGA', 'AAGGAG', 'AGGAGG', 'GGAGGU', 'GAGGUG', 'AGGUGA', 'GGUGAU', 
-    #    'GUGAUC'],
-    #7: ['UAAGGAG', 'AAGGAGG', 'AGGAGGU', 'GGAGGUG', 'GAGGUGA', 'AGGUGAU', 
-    #    'GGUGAUC']
+    6: ['UAAGGA', 'AAGGAG', 'AGGAGG', 'GGAGGU'],
 }
 
 # Various sized windows of the SD sequence by the "broad" definition
