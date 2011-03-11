@@ -1,6 +1,29 @@
 #include "Python.h"
 
 static PyObject *
+simple_difference_score(PyObject *self, PyObject *args) {
+  int i = 0;
+  int score = 0;
+  int seq1_length = 0;
+  int seq2_length = 0;
+  const char* seq1;
+  const char* seq2;
+
+  if (!PyArg_ParseTuple(args, "ss", &seq1, &seq2)) {
+    return NULL;
+  }
+
+  seq1_length = strlen(seq1);
+  for (i=0; i < seq1_length; i++) {
+    if (seq1[i] == seq2[i]) {
+      score++;
+    }
+  }
+
+  return Py_BuildValue("i", score);  
+}
+
+static PyObject *
 overlap_count(PyObject *self, PyObject *args) {
   int i = 0;
   int j = 0;
@@ -40,6 +63,7 @@ overlap_count(PyObject *self, PyObject *args) {
 
 static PyMethodDef cStrings_methods[] = {
   {"overlap_count", (PyCFunction)overlap_count, METH_VARARGS, NULL},
+  {"simple_difference_score", (PyCFunction)simple_difference_score, METH_VARARGS, NULL},
   {NULL, NULL, 0, NULL}
 };
 
