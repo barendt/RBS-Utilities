@@ -20,3 +20,12 @@ def load_sequences(db, accession_id, annotated_yn='N'):
     if len(sequences) == 0:
         raise PhageNoSequencesError("No sequences found for accession ID")
     return sequences
+
+def load_all_sequences(db):
+    sql = """SELECT accession_id, REPLACE(rbs, "T", "U") FROM sequences
+             WHERE LENGTH(rbs) = 18"""
+    db = sqlite3.connect(db)
+    db.row_factory = sqlite3.Row
+    with closing(db.cursor()) as cursor:
+        results = cursor.execute(sql).fetchall()
+    return results
