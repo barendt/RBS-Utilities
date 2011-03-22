@@ -155,7 +155,8 @@ def load_from_db(db, mid, batch=2, population_type="all",
     db = sqlite3.connect(db)
     sql = """SELECT REPLACE(random_region,"T","U") FROM sequences
              WHERE batch_id = ? AND mid_id = ?
-             AND LENGTH(random_region) = 18"""
+             AND LENGTH(random_region) = 18
+             AND random_region NOT LIKE '%N%'"""
     if population_type == "all":
         pass
     elif population_type == "no_sd":
