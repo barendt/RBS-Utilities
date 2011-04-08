@@ -1,6 +1,7 @@
 from contextlib import closing
 from copy import copy
 import itertools
+import os
 from random import choice, sample
 import sqlite3
 
@@ -127,10 +128,14 @@ def has_inframe_aug(sequence):
 def is_sd(sequence, stringency="medium"):
     """Return a boolean, whether sequence contains a 4 base SD motif or not.
 
+    Any T in sequence are replaced with U.
+
     sequence -- The sequence to examine for SD motif.
     stringency -- "broad" | "medium". The definition of SD to use.
 
     """
+    if "T" in sequence:
+        sequence = sequence.replace("T", "U")
     if stringency == "broad":
         variants = sd_variants_broad[4]
     else:
@@ -152,6 +157,8 @@ def load_from_db(db, mid, batch=2, population_type="all",
                             AUG.
 
     """
+    if not os.path.exists(db):
+        raise SequenceError("Path does not exist."
     db = sqlite3.connect(db)
     sql = """SELECT REPLACE(random_region,"T","U") FROM sequences
              WHERE batch_id = ? AND mid_id = ?
