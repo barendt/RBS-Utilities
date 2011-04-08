@@ -2,6 +2,7 @@ from contextlib import closing
 import sqlite3
 
 from rbs.Exceptions import RBSError
+from rbs.Constants import sd_variants_medium
 
 class TranstermNoSequencesError(Exception):
     def __init__(self, msg):
@@ -37,10 +38,23 @@ def load_rrna(db, organism):
         raise TranstermNoSequencesError("No sequences found for organism")
     return results
 
-def load_sequences(db, organism):
+def load_sequences(db, organism, population_type="all"):
     sql = """SELECT REPLACE(rbs,"T","U") FROM sequences 
              WHERE organism_id = (SELECT id FROM organisms WHERE name = ?) 
              AND LENGTH(rbs) = 18"""
+    if population_type == "no_sd":
+        for variant in sd_variants_medium[4]:
+            sql += " AND rbs NOT LIKE %s" % (
+                "'%"+variant.replace("U", "T")+"%'")
+    elif population_type == "only_sd":
+        sql += " AND ("
+        pieces = list()
+        for variant in sd_variants_medium[4]:
+            pieces.append(
+                "rbs LIKE %s" % (
+                    "'%"+variant.replace("U","T")+"%'"))
+        sql += " OR ".join(pieces)
+        sql += ")"
     db = sqlite3.connect(db)
     db.row_factory = sqlite3.Row
     with closing(db.cursor()) as cursor:
