@@ -8,6 +8,8 @@ def create_path_if_not_exists(path):
 
     """
     components = path.split(os.sep)
+    if path.startswith("/"):
+        components[0] = "/"
     for i in xrange(len(components)):
         path = os.sep.join(components[:i+1])
         if not os.path.exists(path):
