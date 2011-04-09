@@ -158,7 +158,7 @@ def load_from_db(db, mid, batch=2, population_type="all",
 
     """
     if not os.path.exists(db):
-        raise SequenceError("Path does not exist."
+        raise SequenceError("Path does not exist.")
     db = sqlite3.connect(db)
     sql = """SELECT REPLACE(random_region,"T","U") FROM sequences
              WHERE batch_id = ? AND mid_id = ?
