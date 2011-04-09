@@ -12,9 +12,16 @@ class TestCreatePathIfNotExistsFunction(unittest.TestCase):
         Files.create_path_if_not_exists("tmp")
         self.assertTrue(os.path.exists("tmp"))
 
-    def test_directory_created_from_full_path(self):
-        """TODO: Don't hardcode the full path, generate one."""
-        path = "/Users/barendt/git/RBS-Utilities/tests/foo"
+    def test_directory_created_from_absolute_path(self):
+        path = "{0}/git/RBS-Utilities/tests/foo".format(
+            os.getenv("HOME"))
+        Files.create_path_if_not_exists(path)
+        self.assertTrue(os.path.exists(path))
+
+    def test_directory_created_in_tmp(self):
+        path = "/tmp/foo/"
+        if os.path.exists(path):
+            os.rmdir(path)
         Files.create_path_if_not_exists(path)
         self.assertTrue(os.path.exists(path))
 

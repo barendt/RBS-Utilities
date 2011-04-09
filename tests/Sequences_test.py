@@ -24,7 +24,7 @@ class TestHasInframeAugFunction(unittest.TestCase):
 
 class TestLoadFromDbFunction(unittest.TestCase):
     def test_no_db_throws_exception(self):
-        self.fail()
+        self.assertRaises(Exception, Sequences.load_from_db, "foo.sqlite", 2)
 
 class TestReverseComplementFunction(unittest.TestCase):
     def test_basic(self):
