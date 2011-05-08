@@ -28,7 +28,7 @@ class TestLoadFromDbFunction(unittest.TestCase):
 
     def test_uncleaned_record_count(self):
         db = "/Users/barendt/git/fresh_start/data/sequences.sqlite"
-        sequences = Sequences.load_from_db(db, 11, 2, cleaned=False)
+        sequences = Sequences.load_from_db(db, 11, 2, clean=False)
         self.assertEqual(len(sequences), 7525)
 
     def test_cleaned_record_count(self):
