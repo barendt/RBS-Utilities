@@ -146,7 +146,7 @@ def is_sd(sequence, stringency="medium"):
     return False
 
 def load_from_db(db, mid, batch=2, population_type="all", 
-                 exclude_inframe_start=False, cleaned=True):
+                 exclude_inframe_start=False, clean=True):
     """Load random regions from the database.
 
     db -- The path to the sqlite database.
@@ -155,6 +155,7 @@ def load_from_db(db, mid, batch=2, population_type="all",
     population_type -- "all"|"no_sd"|"only_sd"
     exclude_inframe_start -- If True, don't include sequences with an in-frame 
                             AUG.
+    clean -- If True, make sure the random region is 18b and it contains no Ns.
 
     """
     if not os.path.exists(db):
