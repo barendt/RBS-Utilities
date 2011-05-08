@@ -26,6 +26,16 @@ class TestLoadFromDbFunction(unittest.TestCase):
     def test_no_db_throws_exception(self):
         self.assertRaises(Exception, Sequences.load_from_db, "foo.sqlite", 2)
 
+    def test_uncleaned_record_count(self):
+        db = "/Users/barendt/git/fresh_start/data/sequences.sqlite"
+        sequences = Sequences.load_from_db(db, 11, 2, cleaned=False)
+        self.assertEqual(len(sequences), 7525)
+
+    def test_cleaned_record_count(self):
+        db = "/Users/barendt/git/fresh_start/data/sequences.sqlite"
+        sequences = Sequences.load_from_db(db, 11, 2)
+        self.assertEqual(len(sequences), 5151)
+
 class TestReverseComplementFunction(unittest.TestCase):
     def test_basic(self):
         rc = Sequences.reverse_complement("GGAGG")

@@ -146,7 +146,7 @@ def is_sd(sequence, stringency="medium"):
     return False
 
 def load_from_db(db, mid, batch=2, population_type="all", 
-                 exclude_inframe_start=False):
+                 exclude_inframe_start=False, cleaned=True):
     """Load random regions from the database.
 
     db -- The path to the sqlite database.
@@ -161,8 +161,9 @@ def load_from_db(db, mid, batch=2, population_type="all",
         raise SequenceError("Path does not exist.")
     db = sqlite3.connect(db)
     sql = """SELECT REPLACE(random_region,"T","U") FROM sequences
-             WHERE batch_id = ? AND mid_id = ?
-             AND LENGTH(random_region) = 18
+             WHERE batch_id = ? AND mid_id = ?"""
+    if cleaned:
+        sql += """ AND LENGTH(random_region) = 18
              AND random_region NOT LIKE '%N%'"""
     if population_type == "all":
         pass
