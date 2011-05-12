@@ -53,13 +53,13 @@ sd_variants_medium = {
 
 # Various sized windows of the SD sequence by the "broad" definition
 sd_variants_broad = {
-    4: ['AAGG', 'AGGA', 'GGAG', 'GAGG', 'AGGU', 'GGUG', 'GUGA', 'UGAU', 
+    4: ['UAAG', 'AAGG', 'AGGA', 'GGAG', 'GAGG', 'AGGU', 'GGUG', 'GUGA', 'UGAU',
         'GAUC'],
-    5: ['UAAGGA', 'AAGGAG', 'AGGAGG', 'GGAGGU', 'GAGGUG', 'AGGUGA', 'GGUGAU', 
+    5: ['UAAGGA', 'AAGGAG', 'AGGAGG', 'GGAGGU', 'GAGGUG', 'AGGUGA', 'GGUGAU',
         'GUGAUC'],
-    6: ['UAAGGA', 'AAGGAG', 'AGGAGG', 'GGAGGU', 'GAGGUG', 'AGGUGA', 'GGUGAU', 
+    6: ['UAAGGA', 'AAGGAG', 'AGGAGG', 'GGAGGU', 'GAGGUG', 'AGGUGA', 'GGUGAU',
         'GUGAUC'],
-    7: ['UAAGGAG', 'AAGGAGG', 'AGGAGGU', 'GGAGGUG', 'GAGGUGA', 'AGGUGAU', 
+    7: ['UAAGGAG', 'AAGGAGG', 'AGGAGGU', 'GGAGGUG', 'GAGGUGA', 'AGGUGAU',
         'GGUGAUC'],
     8: ['UAAGGAGG', 'AAGGAGGU', 'AGGAGGUG', 'GGAGGUGA', 'GAGGUGAU', 'AGGUGAUC'],
     9: ['UAAGGAGGU', 'AAGGAGGUG', 'AGGAGGUGA', 'GGAGGUGAU', 'GAGGUGAUC'],
