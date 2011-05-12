@@ -3,6 +3,7 @@ import sqlite3
 
 from rbs.Exceptions import RBSError
 from rbs.Constants import sd_variants_medium
+from rbs.Sequences import has_inframe_aug
 
 class TranstermNoSequencesError(Exception):
     def __init__(self, msg):
@@ -38,7 +39,7 @@ def load_rrna(db, organism):
         raise TranstermNoSequencesError("No sequences found for organism")
     return results
 
-def load_sequences(db, organism, population_type="all"):
+def load_sequences(db, organism, population_type="all", exclude_inframe_starts=False):
     sql = """SELECT REPLACE(rbs,"T","U") FROM sequences 
              WHERE organism_id = (SELECT id FROM organisms WHERE name = ?) 
              AND LENGTH(rbs) = 18"""
@@ -59,7 +60,16 @@ def load_sequences(db, organism, population_type="all"):
     db.row_factory = sqlite3.Row
     with closing(db.cursor()) as cursor:
         results = cursor.execute(sql, (organism,)).fetchall()
-    sequences = [str(result[0]) for result in results]
+
+    sequences = list()
+    for result in results:
+        seq = str(result[0])
+        ignore = False
+        if exclude_inframe_starts:
+            ignore = has_inframe_aug(seq)
+        if not ignore:
+            sequences.append(seq)
+
     if len(sequences) == 0:
         raise TranstermNoSequencesError("No sequences found for organism")
     return sequences
