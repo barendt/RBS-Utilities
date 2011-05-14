@@ -49,6 +49,14 @@ class TestMotifPositionCountsFunction(unittest.TestCase):
         expected = [0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         results = Sequences.motif_position_counts(library, motif)
         self.assertEqual(expected, results)
+
+    def test_GGAG_at_same_position(self):
+        library = ("AGGAGCCATCTTCTATCT", 
+                   "AGGAGAGAGTTATCCGAC")
+        motif = "GGAG"
+        expected = [0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        results = Sequences.motif_position_counts(library, motif)
+        self.assertEqual(expected, results)
                    
 
 class TestReverseComplementFunction(unittest.TestCase):
