@@ -232,6 +232,23 @@ def load_random_sequences(count, exclude_sd=False, sd_only=False,
         if len(sequences) == count:
             return sequences
 
+def motif_position_counts(sequences, motif):
+    """Return a list of length 18. At each index is an integer that is the 
+    number of times <motif> is found in <sequences> at that position.
+
+    """
+    counts = [0]*18
+    for sequence in sequences:
+        index = 0
+        while True:
+            try:
+                index = sequence.index(motif, index)
+            except ValueError:
+                break
+            counts[index] += 1
+            index = index+1
+    return counts
+
 def pairing_strength(sequence1, sequence2):
     """Returns a scoring of the strength of pairing between two RNA molecules.
 

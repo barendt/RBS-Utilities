@@ -36,6 +36,21 @@ class TestLoadFromDbFunction(unittest.TestCase):
         sequences = Sequences.load_from_db(db, 11, 2)
         self.assertEqual(len(sequences), 5151)
 
+class TestMotifPositionCountsFunction(unittest.TestCase):
+    def test_nothing(self):
+        library = ("A"*18, "G"*18, "C"*18)
+        motif = "UUU"
+        results = Sequences.motif_position_counts(library, motif)
+        self.assertEqual([0]*18, results)
+
+    def test_GGAG(self):
+        library = ("AGGAGCCATCTTCTATCT", "AGAAAGGAGTTATCCGAC")
+        motif = "GGAG"
+        expected = [0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        results = Sequences.motif_position_counts(library, motif)
+        self.assertEqual(expected, results)
+                   
+
 class TestReverseComplementFunction(unittest.TestCase):
     def test_basic(self):
         rc = Sequences.reverse_complement("GGAGG")
