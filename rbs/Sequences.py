@@ -9,8 +9,10 @@ from rbs.Constants import sd_variants_broad, sd_variants_medium
 from rbs.Exceptions import RBSError
 
 class SequenceError(Exception):
-    def __init__(self, msg):
-        self.msg = msg
+    pass
+
+class SequencesInvalidPopulationError(Exception):
+    pass
 
 iupac_nucleotides = {
     "A": "A",
@@ -181,6 +183,9 @@ def load_from_db(db, mid, batch=2, population_type="all",
                     "'%"+variant.replace("U","T")+"%'"))
         sql += " OR ".join(pieces)
         sql += ")"
+    else:
+        raise SequencesInvalidPopulationError("Invalid population: {0}.".format(
+                population_type))
     if exclude_inframe_start:
         sql += " AND has_inframe_aug IS NULL"
     db.row_factory = sqlite3.Row
