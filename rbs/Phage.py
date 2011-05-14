@@ -4,6 +4,9 @@ import sqlite3
 from rbs.Constants import sd_variants_medium
 from rbs.Exceptions import RBSError
 
+t7_accession_id = 'V01146'
+lambda_accession_id = 'J02459'
+
 class PhageNoSequencesError(Exception):
     pass
 
