@@ -14,6 +14,14 @@ class SequenceError(Exception):
 class SequencesInvalidPopulationError(Exception):
     pass
 
+complements = {
+    'A': 'U',
+    'C': 'G',
+    'T': 'A',
+    'G': 'C',
+    'U': 'A',
+}
+
 iupac_nucleotides = {
     "A": "A",
     "C": "C",
@@ -89,18 +97,7 @@ def base_pairing_score(base1, base2):
 
 def complement_base(base):
     """Return the complement of the given base."""
-    if base == "A":              
-        return "U"
-    elif base == "C":
-        return "G"
-    elif base == "T":
-        return "A"
-    elif base == "G":
-        return "C"
-    elif base == "U":
-        return "A"
-    else:
-        return base
+    return complements[base]
 
 def flexible_reverse_complements(sequence, exclude_wobble=True):
     """Return a list of FRCs for a sequence."""
