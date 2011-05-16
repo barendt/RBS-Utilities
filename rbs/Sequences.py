@@ -91,7 +91,7 @@ def base_pairing_score(base1, base2):
     elif pair == ["C", "G"]:
         return 3
     elif pair == ["G","U"]:
-        return 1
+        return 2
     else:
         return 0
 
