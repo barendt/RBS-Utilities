@@ -7,7 +7,7 @@ class UnafoldSequence(object):
 
     def fold(self):
         with open('/tmp/sequence.seq', 'wb') as f:
-            f.write(process_sequence)
+            f.write(self.sequence)
         fnull = open(os.devnull, 'w')
         output = Popen(
             ["hybrid-ss-min", "sequence.seq"],
