@@ -1,3 +1,6 @@
+import os
+from subprocess import Popen
+
 from Bio.RNA.SecstrucParsers import *
 
 class UnafoldSequence(object):
