@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import os
 import unittest
 
 from rbs.UNAFold import UnafoldSequence
