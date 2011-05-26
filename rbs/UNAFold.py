@@ -20,7 +20,7 @@ class UnafoldSequence(object):
             stderr = fnull
             ).communicate()[0]
         fnull.close()
-        self.seq, self.secstruc = parse_ct(open("/tmp/sequence.ct", "rU"))
+        self.secstruc = parse_ct(open("/tmp/sequence.ct", "rU"))[1]
 
     def get_dg(self):
         if not self._dG:
