@@ -9,6 +9,9 @@ class TestUnafoldSequence(unittest.TestCase):
         sequence = 'GGGACACCACAACGGUUUCCCUAAUUCCCU'
         self.u = UnafoldSequence(sequence)
 
+    def test_it_folds_itself_when_dG_is_requested(self):
+        self.assertEqual(-11.1, self.u.dG)
+
     def test_it_should_give_the_correct_dG(self):
         self.u.fold()
         self.assertEqual(-11.1, self.u.dG)
