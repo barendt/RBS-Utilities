@@ -6,8 +6,7 @@ from rbs.Constants import sd_variants_medium
 from rbs.Sequences import has_inframe_aug
 
 class TranstermNoSequencesError(Exception):
-    def __init__(self, msg):
-        self.msg = msg
+    pass
 
 def get_organisms(db, type="utr"):
     """Return the organism keys.
