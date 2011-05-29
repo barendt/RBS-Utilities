@@ -55,8 +55,8 @@ sd_variants_medium = {
 sd_variants_broad = {
     4: ['UAAG', 'AAGG', 'AGGA', 'GGAG', 'GAGG', 'AGGU', 'GGUG', 'GUGA', 'UGAU',
         'GAUC'],
-    5: ['UAAGGA', 'AAGGAG', 'AGGAGG', 'GGAGGU', 'GAGGUG', 'AGGUGA', 'GGUGAU',
-        'GUGAUC'],
+    5: ['UAAGG', 'AAGGA', 'AGGAG', 'GGAGG', 'GAGGU', 'AGGUG', 'GGUGA',
+        'GUGAU', 'UGAUC'],
     6: ['UAAGGA', 'AAGGAG', 'AGGAGG', 'GGAGGU', 'GAGGUG', 'AGGUGA', 'GGUGAU',
         'GUGAUC'],
     7: ['UAAGGAG', 'AAGGAGG', 'AGGAGGU', 'GGAGGUG', 'GAGGUGA', 'AGGUGAU',
