@@ -144,6 +144,22 @@ def is_sd(sequence, stringency="medium"):
             return True
     return False
 
+def load_raw_records_from_db(db, mid, batch=2, clean=True):
+    """Load both the random_region and the full_sequence from the db.
+    """
+    if not os.path.exists(db):
+        raise SequenceError("Path does not exist.")
+    db = sqlite3.connect(db)
+    sql = """SELECT random_region, full_sequence FROM sequences
+             WHERE batch_id = ? AND mid_id = ?"""
+    if clean:
+        sql += """ AND LENGTH(random_region) = 18
+             AND random_region NOT LIKE '%N%'"""
+    db.row_factory = sqlite3.Row
+    with closing(db.cursor()) as cursor:
+        results = cursor.execute(sql, (batch, mid,)).fetchall()
+    return results
+
 def load_from_db(db, mid, batch=2, population_type="all", 
                  exclude_inframe_start=False, clean=True):
     """Load random regions from the database.
@@ -281,7 +297,12 @@ def random_motif_using_iupac(iupac_string):
     return "".join(bases)
 
 def reverse_complement(sequence):
-    """Return the reverse complement of the given sequence."""
+    """Return the reverse complement of the given sequence.
+    
+    >>> reverse_complement('ACGT')
+    'ACGU'
+
+    """
     reverse = [complement_base(base) for base in sequence[::-1]]
     return "".join(reverse)
 
