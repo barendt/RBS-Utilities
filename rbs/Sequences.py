@@ -6,6 +6,7 @@ import os
 from random import choice, sample
 import sqlite3
 
+from rbs.cStrings import overlap_count
 from rbs.Constants import sd_variants_broad, sd_variants_medium
 from rbs.Exceptions import RBSError
 
@@ -113,7 +114,7 @@ def get_base_usage(sequences):
     """Return a dict with each base and its occurrence in the  in the sequence list.
 
     sequences -- A list of sequences
-    
+
     """
     usage = {"A": 0, "C": 0, "G": 0, "U": 0}
     for sequence in sequences:
@@ -163,7 +164,7 @@ def load_raw_records_from_db(db, mid, batch=2, clean=True):
         results = cursor.execute(sql, (batch, mid,)).fetchall()
     return results
 
-def load_from_db(db, mid, batch=2, population_type="all", 
+def load_from_db(db, mid, batch=2, population_type="all",
                  exclude_inframe_start=False, clean=True):
     """Load random regions from the database.
 
@@ -171,7 +172,7 @@ def load_from_db(db, mid, batch=2, population_type="all",
     mid -- The MID to load.
     batch -- The sequencing batch, defaults to 2.
     population_type -- "all"|"no_sd"|"only_sd"
-    exclude_inframe_start -- If True, don't include sequences with an in-frame 
+    exclude_inframe_start -- If True, don't include sequences with an in-frame
                             AUG.
     clean -- If True, make sure the random region is 18b and it contains no Ns.
 
@@ -214,7 +215,7 @@ def load_random_sequences(count, exclude_sd=False, sd_only=False,
                           exclude_inframe_aug=False):
     """Return a list of random 18 base sequences without in-frame start
     codons.
-    
+
     count -- The number of sequences to generate.
     exclude_sd -- If True, don't generate random sequences with SD
                   sequences by the broad definition.
@@ -254,7 +255,7 @@ def load_random_sequences(count, exclude_sd=False, sd_only=False,
             return sequences
 
 def motif_position_counts(sequences, motif):
-    """Return a list of length 18. At each index is an integer that is the 
+    """Return a list of length 18. At each index is an integer that is the
     number of times <motif> is found in <sequences> at that position.
 
     """
@@ -279,7 +280,7 @@ def pairing_strength(sequence1, sequence2):
     if len(sequence1) != len(sequence2):
         raise SequenceError("Sequences are not the same length.")
     r_sequence2 = [base for base in sequence2[::-1]]
-        
+
     score = 0
     for i in xrange(len(sequence1)):
         score += base_pairing_score(sequence1[i], r_sequence2[i])
@@ -301,7 +302,7 @@ def random_motif_using_iupac(iupac_string):
 
 def reverse_complement(sequence):
     """Return the reverse complement of the given sequence.
-    
+
     >>> reverse_complement('ACGT')
     'ACGU'
 
@@ -322,3 +323,28 @@ def scramble_sequences(sequences, multiplier):
             output.append("".join(sample(sequence, len(sequence))))
             i += 1
     return output
+
+def motif_count(sequences):
+    """Return a dict of motif counts for all motifs, lengths 4 through 7.
+
+    The output dict is nested like so:
+      motifs = {
+        4: {
+          'GGAG': 5,
+        }
+      }
+
+    sequences -- A list of sequences
+    """
+    motifs = dict()
+    for motif_length in range(4, 8):
+        print "Motif length %d..." % motif_length
+        motifs[motif_length] = dict()
+        for sequence in sequences:
+            for motif in possible_motifs_by_length(motif_length):
+                if motif not in motifs[motif_length]:
+                    motifs[motif_length][motif] = 0
+                if sequence.find(motif) != -1:
+                    motifs[motif_length][motif] += overlap_count(
+                        sequence, motif)
+    return motifs
