@@ -37,15 +37,15 @@ class TestLoadFromDbFunction(unittest.TestCase):
         self.assertEqual(len(sequences), 5151)
 
 class TestLoadRawRecordsFromDb(unittest.TestCase):
-    def test_it_should_return_all_of_mid1_batch1(self):
+    def setUp(self):
         db = "/Users/barendt/git/fresh_start/data/sequences.sqlite"
-        sequences = Sequences.load_raw_records_from_db(db, 1, 1)
-        self.assertEqual(19646, len(sequences))
+        self.sequences = Sequences.load_raw_records_from_db(db, 1, 1)
+
+    def test_it_should_return_all_of_mid1_batch1(self):
+        self.assertEqual(19646, len(self.sequences))
 
     def test_it_should_return_2_items_per_record(self):
-        db = "/Users/barendt/git/fresh_start/data/sequences.sqlite"
-        sequences = Sequences.load_raw_records_from_db(db, 1, 1)
-        self.assertEqual(2, len(sequences[0]))
+        self.assertEqual(2, len(self.sequences[0]))
 
 class TestMotifPositionCountsFunction(unittest.TestCase):
     def test_nothing(self):
