@@ -49,6 +49,8 @@ sd_variants_medium = {
     4: ['AAGG', 'AGGA', 'GGAG', 'GAGG', 'AGGU'],
     5: ['UAAGG', 'AAGGA', 'AGGAG', 'GGAGG', 'GAGGU'],
     6: ['UAAGGA', 'AAGGAG', 'AGGAGG', 'GGAGGU'],
+    7: ['UAAGGAG', 'AAGGAGG', 'AGGAGGU'],
+    8: ['UAAGGAGG', 'AAGGAGGU'],
 }
 
 # Various sized windows of the SD sequence by the "broad" definition
