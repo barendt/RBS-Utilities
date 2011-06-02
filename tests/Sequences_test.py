@@ -68,7 +68,12 @@ class TestMotifPositionCountsFunction(unittest.TestCase):
         expected = [0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         results = Sequences.motif_position_counts(library, motif)
         self.assertEqual(expected, results)
-                   
+
+class TestRBSLibraryNamedTuple(unittest.TestCase):
+    def test_it_can_be_created_and_referenced(self):
+        library = Sequences.RBSLibrary(1, 2)
+        self.assertEqual(1, library.batch)
+        self.assertEqual(2, library.mid)
 
 class TestReverseComplementFunction(unittest.TestCase):
     def test_basic(self):

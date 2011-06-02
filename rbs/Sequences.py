@@ -1,3 +1,4 @@
+from collections import namedtuple
 from contextlib import closing
 from copy import copy
 import itertools
@@ -39,6 +40,8 @@ iupac_nucleotides = {
     "V": "ACG",
     "N": "ACGT",
 }
+
+RBSLibrary = namedtuple('RBSLibrary', ['batch', 'mid'])
 
 def _frc_process(sequence, sequence_list, exclude_wobble):
     next_base = sequence[-1]
