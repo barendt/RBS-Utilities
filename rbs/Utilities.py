@@ -11,9 +11,8 @@ try:
 except ImportError:
     import pickle
 
-class RBSUtilitiesError(Exception):
-    def __init__(self, msg):
-        self.msg = msg
+class RBSPickleExistsError(Exception):
+    pass
 
 def load_pickle(file_path):
     """Load an object from a pickle file.
@@ -34,6 +33,6 @@ def save_pickle(obj, file_path, force=False):
     """    
     if not force:
         if os.path.exists(file_path):
-            raise RBSUtilitiesError("Pickle file already exists.")
+            raise RBSPickleExistsError("Pickle file already exists.")
     with open(file_path, "wb") as f:
         pickle.dump(obj, f)
