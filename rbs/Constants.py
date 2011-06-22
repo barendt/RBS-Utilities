@@ -79,7 +79,7 @@ upstream_regions = {
     'MID11': 'GGGACACCACAACGGTTTCCCTAATTGTGAGCGGATAACAATAGAAATAATTTTGTTTAACTT',
 }
 
-FLANKING_REGIONS = {
+flanking_regions = {
     'Batch2': {
         1: ("ACGGTTTCCC", "ATGGCGGACT"),
         2: ("ACGGTTTCCC", "ATGGCGGACT"),
@@ -96,7 +96,7 @@ FLANKING_REGIONS = {
 }
 
 # The MID sequences
-MIDS = {
+mids = {
   "ACGAGTGCGT": 1,
   "ACGCTCGACA": 2,
   "AGACGCACTC": 3,
