@@ -97,15 +97,15 @@ flanking_regions = {
 
 # The MID sequences
 mids = {
-  "ACGAGTGCGT": 1,
-  "ACGCTCGACA": 2,
-  "AGACGCACTC": 3,
-  "AGCACTGTAG": 4,
-  "ATCAGACACG": 5,
-  "ATATCGCGAG": 6,
-  "CGTGTCTCTA": 7,
-  "CTCGCGTGTC": 8,
-  "TAGTATCAGC": 9,
-  "TCTCTATGCG": 10,
-  "TGATACGTCT": 11,
+  1: "ACGAGTGCGT",
+  2: "ACGCTCGACA",
+  3: "AGACGCACTC",
+  4: "AGCACTGTAG",
+  5: "ATCAGACACG",
+  6: "ATATCGCGAG",
+  7: "CGTGTCTCTA",
+  8: "CTCGCGTGTC",
+  9: "TAGTATCAGC",
+  10: "TCTCTATGCG",
+  11: "TGATACGTCT",
 }
