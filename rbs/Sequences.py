@@ -324,7 +324,7 @@ def scramble_sequences(sequences, multiplier):
             i += 1
     return output
 
-def motif_count(sequences):
+def motif_count(sequences, start_at=4, stop_at=8):
     """Return a dict of motif counts for all motifs, lengths 4 through 7.
 
     The output dict is nested like so:
@@ -337,7 +337,7 @@ def motif_count(sequences):
     sequences -- A list of sequences
     """
     motifs = dict()
-    for motif_length in range(4, 8):
+    for motif_length in range(start_at, stop_at):
         print "Motif length %d..." % motif_length
         motifs[motif_length] = dict()
         for sequence in sequences:
