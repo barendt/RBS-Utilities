@@ -338,7 +338,6 @@ def motif_count(sequences, start_at=4, stop_at=8):
     """
     motifs = dict()
     for motif_length in range(start_at, stop_at):
-        print "Motif length %d..." % motif_length
         motifs[motif_length] = dict()
         for sequence in sequences:
             for motif in possible_motifs_by_length(motif_length):
